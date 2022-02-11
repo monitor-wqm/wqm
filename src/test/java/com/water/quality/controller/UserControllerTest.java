@@ -17,7 +17,7 @@ class UserControllerTest {
     @Test
     void searchUser() {
         R admin = userController.searchUser("admin");
-
+        //打印
         log.info("admin = " + admin);
     }
 }
