@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.water.quality.mapper.WqParamMapper">
+    <resultMap id="WqParamVoMap" type="com.water.quality.pojo.vo.WqParamVo">
+        <id column="id" property="id"></id>
+        <result column="wq_type_id" property="wqTypeId"></result>
+        <result column="wq_param_type_id" property="wqParamTypeId"></result>
+        <result column="max_concentration" property="maxConcentration"></result>
+        <result column="min_concentration" property="minConcentration"></result>
+        <result column="unit" property="unit"></result>
+    </resultMap>
+
+    <select id="listWithName" resultMap="WqParamVoMap">
+        select wp.*, wt.name wqTypeName, wpt.name wqParamTypeName, wpt.unit `unit` from wq_param wp
+            left join wq_param_type wpt on wp.wq_param_type_id = wpt.id
+            left join wq_type wt on wp.wq_type_id = wt.id
+    </select>
+</mapper>
