@@ -1,6 +1,6 @@
 package com.water.quality.mapper;
 
-import com.water.quality.pojo.entity.Notice;
+import com.water.quality.pojo.entity.NoticeEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-02-10
  */
 @Mapper
-public interface NoticeMapper extends BaseMapper<Notice> {
+public interface NoticeMapper extends BaseMapper<NoticeEntity> {
 
 }

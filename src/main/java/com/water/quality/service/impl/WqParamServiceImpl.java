@@ -2,7 +2,7 @@ package com.water.quality.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.water.quality.mapper.WqParamMapper;
-import com.water.quality.pojo.entity.WqParam;
+import com.water.quality.pojo.entity.WqParamEntity;
 import com.water.quality.pojo.vo.WqParamVo;
 import com.water.quality.service.WqParamService;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2022-02-10
  */
 @Service
-public class WqParamServiceImpl extends ServiceImpl<WqParamMapper, WqParam> implements WqParamService {
+public class WqParamServiceImpl extends ServiceImpl<WqParamMapper, WqParamEntity> implements WqParamService {
 
     @Override
     public List<WqParamVo> listWithName() {

@@ -2,7 +2,7 @@ package com.water.quality.controller;
 
 
 import com.water.quality.asserts.Assert;
-import com.water.quality.pojo.entity.MonitorPoint;
+import com.water.quality.pojo.entity.MonitorPointEntity;
 import com.water.quality.r.R;
 import com.water.quality.r.enums.ResponseEnum;
 import com.water.quality.service.MonitorPointService;
@@ -40,7 +40,7 @@ public class MonitorPointController {
     @ApiOperation("查询监测点列表")
     @GetMapping("/list")
     public R list() {
-        List<MonitorPoint> list = monitorPointService.list();
+        List<MonitorPointEntity> list = monitorPointService.list();
         Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("list", list);
     }

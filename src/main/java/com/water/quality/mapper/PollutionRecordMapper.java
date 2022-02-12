@@ -1,6 +1,6 @@
 package com.water.quality.mapper;
 
-import com.water.quality.pojo.entity.PollutionRecord;
+import com.water.quality.pojo.entity.PollutionRecordEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-02-10
  */
 @Mapper
-public interface PollutionRecordMapper extends BaseMapper<PollutionRecord> {
+public interface PollutionRecordMapper extends BaseMapper<PollutionRecordEntity> {
 
 }

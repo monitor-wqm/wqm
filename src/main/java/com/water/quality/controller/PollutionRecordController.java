@@ -2,7 +2,7 @@ package com.water.quality.controller;
 
 
 import com.water.quality.asserts.Assert;
-import com.water.quality.pojo.entity.PollutionRecord;
+import com.water.quality.pojo.entity.PollutionRecordEntity;
 import com.water.quality.r.R;
 import com.water.quality.r.enums.ResponseEnum;
 import com.water.quality.service.PollutionRecordService;
@@ -40,7 +40,7 @@ public class PollutionRecordController {
     @ApiOperation("查询某个监测点的污染记录")
     @GetMapping("/select/{id}")
     public R select(@ApiParam(value = "监测点id", required = true) @PathVariable("id") Long id) {
-        List<PollutionRecord> list = pollutionRecordService.selectPollutionRecordByMonitorPointId(id);
+        List<PollutionRecordEntity> list = pollutionRecordService.selectPollutionRecordByMonitorPointId(id);
         Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("list", list);
     }

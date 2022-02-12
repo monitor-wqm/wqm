@@ -1,6 +1,6 @@
 package com.water.quality.service;
 
-import com.water.quality.pojo.entity.Notice;
+import com.water.quality.pojo.entity.NoticeEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 消息通知表 服务类
  * </p>
  *
- * @author 
+ * @author
  * @since 2022-02-10
  */
-public interface NoticeService extends IService<Notice> {
+public interface NoticeService extends IService<NoticeEntity> {
 
 }

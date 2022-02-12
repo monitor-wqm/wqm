@@ -1,6 +1,6 @@
 package com.water.quality.mapper;
 
-import com.water.quality.pojo.entity.WqType;
+import com.water.quality.pojo.entity.WqTypeEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-02-10
  */
 @Mapper
-public interface WqTypeMapper extends BaseMapper<WqType> {
+public interface WqTypeMapper extends BaseMapper<WqTypeEntity> {
 
 }

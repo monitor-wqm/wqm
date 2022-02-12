@@ -1,6 +1,6 @@
 package com.water.quality.service;
 
-import com.water.quality.pojo.entity.PollutionRecord;
+import com.water.quality.pojo.entity.PollutionRecordEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -13,12 +13,12 @@ import java.util.List;
  * @author
  * @since 2022-02-10
  */
-public interface PollutionRecordService extends IService<PollutionRecord> {
+public interface PollutionRecordService extends IService<PollutionRecordEntity> {
 
     /**
      * 通过监测点id 查询监测点的污染记录 todo:后期封装query
      * @param id 监测点id
      * @return 监测点的污染记录列表
      */
-    List<PollutionRecord> selectPollutionRecordByMonitorPointId(Long id);
+    List<PollutionRecordEntity> selectPollutionRecordByMonitorPointId(Long id);
 }

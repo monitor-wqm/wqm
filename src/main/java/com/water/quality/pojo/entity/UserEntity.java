@@ -2,6 +2,7 @@ package com.water.quality.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,7 +22,8 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="User对象", description="用户")
-public class User implements Serializable {
+@TableName("user")
+public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

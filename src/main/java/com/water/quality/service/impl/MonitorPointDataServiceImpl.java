@@ -1,7 +1,7 @@
 package com.water.quality.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.water.quality.pojo.entity.MonitorPointData;
+import com.water.quality.pojo.entity.MonitorPointDataEntity;
 import com.water.quality.mapper.MonitorPointDataMapper;
 import com.water.quality.service.MonitorPointDataService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,11 +18,20 @@ import java.util.List;
  * @since 2022-02-10
  */
 @Service
-public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMapper, MonitorPointData> implements MonitorPointDataService {
+public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMapper, MonitorPointDataEntity> implements MonitorPointDataService {
 
     @Override
-    public List<MonitorPointData> selectMonitorPointDataByMonitorPointId(Long id) {
+    public List<MonitorPointDataEntity> selectMonitorPointDataByMonitorPointId(Long id) {
         return baseMapper.selectList(
-                new QueryWrapper<MonitorPointData>().eq("monitor_point_id", id));
+                new QueryWrapper<MonitorPointDataEntity>().eq("monitor_point_id", id));
+    }
+
+    @Override
+    public MonitorPointDataEntity selectLatestMonitorPointDataByMonitorPointId(Long id) {
+
+        return baseMapper.selectOne(new QueryWrapper<MonitorPointDataEntity>()
+                .eq("monitor_point_id", id)
+                .orderByDesc("create_time")
+                .last("Limit 1"));
     }
 }

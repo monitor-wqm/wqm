@@ -1,6 +1,6 @@
 package com.water.quality.service;
 
-import com.water.quality.pojo.entity.MonitorPoint;
+import com.water.quality.pojo.entity.MonitorPointEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 监测点表 服务类
  * </p>
  *
- * @author 
+ * @author
  * @since 2022-02-10
  */
-public interface MonitorPointService extends IService<MonitorPoint> {
+public interface MonitorPointService extends IService<MonitorPointEntity> {
 
 }

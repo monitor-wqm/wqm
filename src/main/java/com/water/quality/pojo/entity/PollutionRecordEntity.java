@@ -2,6 +2,7 @@ package com.water.quality.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,7 +22,8 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="PollutionRecord对象", description="污染记录表")
-public class PollutionRecord implements Serializable {
+@TableName("pollution_record")
+public class PollutionRecordEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

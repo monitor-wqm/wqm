@@ -2,7 +2,7 @@ package com.water.quality.controller;
 
 
 import com.water.quality.asserts.Assert;
-import com.water.quality.pojo.entity.WqType;
+import com.water.quality.pojo.entity.WqTypeEntity;
 import com.water.quality.r.R;
 import com.water.quality.r.enums.ResponseEnum;
 import com.water.quality.service.WqTypeService;
@@ -36,7 +36,7 @@ public class WqTypeController {
     @ApiOperation("查询水质类别列表")
     @GetMapping("/list")
     public R list() {
-        List<WqType> list = wqTypeService.list();
+        List<WqTypeEntity> list = wqTypeService.list();
         Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("list", list);
     }

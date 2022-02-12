@@ -1,6 +1,6 @@
 package com.water.quality.service;
 
-import com.water.quality.pojo.entity.User;
+import com.water.quality.pojo.entity.UserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 用户 服务类
  * </p>
  *
- * @author 
+ * @author
  * @since 2022-02-10
  */
-public interface UserService extends IService<User> {
+public interface UserService extends IService<UserEntity> {
 
 }

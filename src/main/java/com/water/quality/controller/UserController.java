@@ -3,7 +3,7 @@ package com.water.quality.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.water.quality.asserts.Assert;
-import com.water.quality.pojo.entity.User;
+import com.water.quality.pojo.entity.UserEntity;
 import com.water.quality.r.R;
 import com.water.quality.r.enums.ResponseEnum;
 import com.water.quality.service.UserService;
@@ -33,10 +33,10 @@ public class UserController {
     @ApiOperation("查询用户")
     @GetMapping("/search/user/{username}")
     public R searchUser(@PathVariable("username") @ApiParam(value = "用户名", required = true) String username) {
-        User user = userService.getOne(new QueryWrapper<User>()
+        UserEntity userEntity = userService.getOne(new QueryWrapper<UserEntity>()
                 .eq("username", username));
-        Assert.notNull(user, ResponseEnum.DATABASE_NULL_ERROR);
-        return R.ok().data("user", user);
+        Assert.notNull(userEntity, ResponseEnum.DATABASE_NULL_ERROR);
+        return R.ok().data("user", userEntity);
     }
 }
 

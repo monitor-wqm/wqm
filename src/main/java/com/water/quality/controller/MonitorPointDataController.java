@@ -2,7 +2,7 @@ package com.water.quality.controller;
 
 
 import com.water.quality.asserts.Assert;
-import com.water.quality.pojo.entity.MonitorPointData;
+import com.water.quality.pojo.entity.MonitorPointDataEntity;
 import com.water.quality.r.R;
 import com.water.quality.r.enums.ResponseEnum;
 import com.water.quality.service.MonitorPointDataService;
@@ -38,9 +38,21 @@ public class MonitorPointDataController {
     @ApiOperation("查询某个监测点的监测数据")
     @GetMapping("/select/{id}")
     public R select(@ApiParam(value = "监测点id", required = true) @PathVariable("id") Long id) {
-        List<MonitorPointData> list = monitorPointDataService.selectMonitorPointDataByMonitorPointId(id);
+        List<MonitorPointDataEntity> list = monitorPointDataService.selectMonitorPointDataByMonitorPointId(id);
         Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("list", list);
     }
+
+    /**
+     * 监测点最新数据查询
+     */
+    @ApiOperation("查询某个监测点的最新监测数据")
+    @GetMapping("/select/latest/{id}")
+    public R selectLatest(@ApiParam(value = "监测点id", required = true) @PathVariable("id") Long id) {
+        MonitorPointDataEntity latestData = monitorPointDataService.selectLatestMonitorPointDataByMonitorPointId(id);
+        Assert.notNull(latestData, ResponseEnum.DATABASE_NULL_ERROR);
+        return R.ok().data("latestData", latestData);
+    }
+
 }
 
