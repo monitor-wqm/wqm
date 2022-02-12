@@ -18,8 +18,9 @@ public enum ResponseEnum {
     UPLOAD_ERROR(103, "文件上传错误"),
     EXPORT_DATA_ERROR(104, "数据导出失败"),
     DELETE_DATA_ERROR(105, "数据删除失败"),
-    TYPE_DATA_ERROR(106, "数据类型错误"),
-    DATABASE_UPDATE_ERROR(107, "数据修改错误，请检查数据是否符合标准"),
+    UPDATE_DATA_ERROR(106, "数据修改失败"),
+    TYPE_DATA_ERROR(107, "数据类型错误"),
+    DATABASE_UPDATE_ERROR(108, "数据修改错误，请检查数据是否符合标准"),
 
     //-2xx 参数校验
     COMMIT_NULL_ERROR(201, "提交参数不能为空"),
