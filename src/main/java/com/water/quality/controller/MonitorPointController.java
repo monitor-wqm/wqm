@@ -44,5 +44,9 @@ public class MonitorPointController {
         Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("list", list);
     }
+
+    /**
+     * 监测点查询
+     */
 }
 
