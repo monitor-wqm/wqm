@@ -26,7 +26,7 @@ import java.sql.SQLException;
  * 集中处理所有异常
  */
 @Slf4j
-@RestControllerAdvice(basePackages = "com.ofds.core.controller")
+@RestControllerAdvice(basePackages = "com.water.quality.controller")
 public class OFDSExceptionControllerAdvice {
 
     /**

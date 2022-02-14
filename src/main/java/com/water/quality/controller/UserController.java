@@ -4,6 +4,7 @@ package com.water.quality.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.water.quality.asserts.Assert;
 import com.water.quality.pojo.entity.UserEntity;
+import com.water.quality.pojo.vo.UserVo;
 import com.water.quality.r.R;
 import com.water.quality.r.enums.ResponseEnum;
 import com.water.quality.service.UserService;
@@ -37,6 +38,16 @@ public class  UserController {
                 .eq("username", username));
         Assert.notNull(userEntity, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("user", userEntity);
+    }
+
+    @ApiOperation("用户登录")
+    @PostMapping("/login")
+    public R searchUser(@RequestParam("username") @ApiParam(value = "用户名", required = true) String username,
+                        @RequestParam("password") @ApiParam(value = "密码", required = true) String password) {
+        UserVo user = userService.login(username, password);
+        Assert.notNull(user, ResponseEnum.LOGINACCT_PASSWORD_EXCEPTION);
+        //todo session设置
+        return R.ok().data("user", user);
     }
 }
 

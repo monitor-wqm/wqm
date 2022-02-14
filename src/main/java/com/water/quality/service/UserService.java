@@ -2,6 +2,7 @@ package com.water.quality.service;
 
 import com.water.quality.pojo.entity.UserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.water.quality.pojo.vo.UserVo;
 
 /**
  * <p>
@@ -13,4 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<UserEntity> {
 
+    /**
+     * 用户登录
+     * @param username 用户名
+     * @param password 密码
+     * @Return 用户对象
+     */
+    UserVo login(String username, String password);
 }

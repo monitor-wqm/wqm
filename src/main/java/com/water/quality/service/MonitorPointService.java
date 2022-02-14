@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MonitorPointService extends IService<MonitorPointEntity> {
 
+    /**
+     * 更新监测点信息
+     * @param monitorPoint
+     * @return 受影响行数
+     */
+    int updateMonitorPointById(MonitorPointEntity monitorPoint);
 }

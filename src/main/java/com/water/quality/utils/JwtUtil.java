@@ -21,7 +21,7 @@ public class JwtUtil {
         return new SecretKeySpec(bytes,signatureAlgorithm.getJcaName());
     }
 
-    public static String createToken(Integer userId, String userName) {
+    public static String createToken(Long userId, String userName) {
         String token = Jwts.builder()
                 .setSubject("SRB-USER")
                 .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration))

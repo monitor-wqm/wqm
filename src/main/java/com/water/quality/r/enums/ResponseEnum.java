@@ -39,6 +39,7 @@ public enum ResponseEnum {
     ADD_ID_NOT(213, "新增ID不能指定"),
     DELETE_ID_NOT(214, "删除ID不能指定"),
     ID_NULL_ERROR(215, "ID不能为空"),
+    NAME_REPEAT_ERROR(216, "名称重复"),
 
     USER_BIND_IDCARD_EXIST_ERROR(301, "身份证号码已绑定"),
     USER_NO_BIND_ERROR(302, "用户未绑定"),

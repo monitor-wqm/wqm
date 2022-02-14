@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -70,9 +71,8 @@ public class MonitorPointController {
      */
     @PutMapping("/update")
     public R update(@RequestBody MonitorPointEntity monitorPoint){
-        //todo 对更新数据进行判断 判重、判改变数据的影响、判新数据时候符合要求
-        boolean update = monitorPointService.updateById(monitorPoint);
-        Assert.isTrue(update, ResponseEnum.UPDATE_DATA_ERROR);
+        int update = monitorPointService.updateMonitorPointById(monitorPoint);
+        Assert.isTrue(update > 0, ResponseEnum.UPDATE_DATA_ERROR);
         return R.ok();
     }
 
@@ -90,7 +90,7 @@ public class MonitorPointController {
     /**
      * 监测点id查询
      */
-    @GetMapping("/search/monitorPoint/{id}")
+    @GetMapping("/search/{id}")
     public R getById(@PathVariable Integer id){
         MonitorPointEntity getById = monitorPointService.getById(id);
         Assert.notNull(getById, ResponseEnum.DATABASE_NULL_ERROR);
@@ -100,8 +100,8 @@ public class MonitorPointController {
     /**
      * 监测点名查询
      */
-    @GetMapping("/search/monitorPoint/{name}")
-    public R searchMonitorPoint(@PathVariable("name") @ApiParam(value = "监测点名", required = true) String name) {
+    @GetMapping("/search")
+    public R searchMonitorPoint(@RequestParam @ApiParam(value = "监测点名", required = true) String name) {
         MonitorPointEntity monitorPointEntity = monitorPointService.getOne(new QueryWrapper<MonitorPointEntity>()
                 .eq("name",name));
         Assert.notNull(monitorPointEntity, ResponseEnum.DATABASE_NULL_ERROR);
