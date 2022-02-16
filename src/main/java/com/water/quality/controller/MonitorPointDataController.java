@@ -54,5 +54,18 @@ public class MonitorPointDataController {
         return R.ok().data("latestData", latestData);
     }
 
+    /**
+     * 新增监测点数据
+     */
+    @ApiOperation("新增监测点数据")
+    @GetMapping("/insert/{id}")
+    public R insert(@ApiParam(value = "监测点id", required = true) @PathVariable("id") Long id,
+                    @RequestBody MonitorPointDataEntity monitorPointDataEntity) {
+
+        int status = monitorPointDataService.insertMonitorPointData(monitorPointDataEntity);
+        Assert.isTrue(status > 0, ResponseEnum.INSERT_DATA_ERROR);
+        return R.ok();
+    }
+
 }
 

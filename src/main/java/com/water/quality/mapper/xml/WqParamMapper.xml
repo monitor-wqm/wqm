@@ -14,5 +14,12 @@
         select wp.*, wt.name wqTypeName, wpt.name wqParamTypeName, wpt.unit `unit` from wq_param wp
             left join wq_param_type wpt on wp.wq_param_type_id = wpt.id
             left join wq_type wt on wp.wq_type_id = wt.id
+        where wt.name != '超标类'
+    </select>
+    <select id="listOutWithName" resultType="com.water.quality.pojo.vo.WqParamVo">
+        select wp.*, wt.name wqTypeName, wpt.name wqParamTypeName, wpt.unit `unit` from wq_param wp
+            left join wq_param_type wpt on wp.wq_param_type_id = wpt.id
+            left join wq_type wt on wp.wq_type_id = wt.id
+        where wt.name = '超标类'
     </select>
 </mapper>

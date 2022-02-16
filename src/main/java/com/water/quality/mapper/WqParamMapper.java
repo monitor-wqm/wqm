@@ -18,5 +18,15 @@ import java.util.List;
 @Mapper
 public interface WqParamMapper extends BaseMapper<WqParamEntity> {
 
+    /**
+     * 获取水质类别及对应水质参数阈值
+     * @return 水质参数Vo列表
+     */
     List<WqParamVo> listWithName();
+
+    /**
+     * 获取水质参数标准范围
+     * @return 水质参数Vo列表
+     */
+    List<WqParamVo> listOutWithName();
 }

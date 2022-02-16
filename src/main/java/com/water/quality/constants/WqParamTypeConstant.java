@@ -37,6 +37,44 @@ public class WqParamTypeConstant {
      */
     public static final String UNIT_MV = "mv";
 
+    /**
+     * PH值
+     */
+    public static final String TYPE_PH = "PH值";
 
+    /**
+     * 溶氧量
+     */
+    public static final String TYPE_DISSOLVEDOXYGEN = "溶氧量";
+
+    /**
+     * 氨氮
+     */
+    public static final String TYPE_NH3N = "氨氮";
+
+    /**
+     * 高锰酸钾指数
+     */
+    public static final String TYPE_MNO4 = "高锰酸钾指数";
+
+    /**
+     * 高锰酸钾指数
+     */
+    public static final String TYPE_TURBIDITY = "浑浊度";
+
+    /**
+     * 高锰酸钾指数
+     */
+    public static final String TYPE_TEMPERATURE = "温度";
+
+    /**
+     * 高锰酸钾指数
+     */
+    public static final String TYPE_CONDUCTIVITY = "导电率";
+
+    /**
+     * 高锰酸钾指数
+     */
+    public static final String TYPE_REDOXPOTENTIAL = "氧化还原电位";
 
 }
