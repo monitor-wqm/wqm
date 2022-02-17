@@ -70,7 +70,7 @@ public class WqParamTypeConstant {
     /**
      * 高锰酸钾指数
      */
-    public static final String TYPE_CONDUCTIVITY = "导电率";
+    public static final String TYPE_CONDUCTIVITY = "电导率";
 
     /**
      * 高锰酸钾指数

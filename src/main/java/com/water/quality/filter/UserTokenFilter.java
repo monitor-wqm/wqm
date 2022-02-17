@@ -26,7 +26,7 @@ public class UserTokenFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = ((HttpServletRequest) servletRequest).getHeader("token");
         if (StringUtils.isEmpty(token)) {
-            System.out.println("用户未登录");
+//            System.out.println("用户未登录");
         } else {
             UserContext.setToken(token);
         }

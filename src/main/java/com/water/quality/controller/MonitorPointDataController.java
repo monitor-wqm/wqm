@@ -58,7 +58,7 @@ public class MonitorPointDataController {
      * 新增监测点数据
      */
     @ApiOperation("新增监测点数据")
-    @GetMapping("/insert/{id}")
+    @PostMapping("/insert/{id}")
     public R insert(@ApiParam(value = "监测点id", required = true) @PathVariable("id") Long id,
                     @RequestBody MonitorPointDataEntity monitorPointDataEntity) {
 

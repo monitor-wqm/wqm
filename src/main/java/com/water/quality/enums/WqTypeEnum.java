@@ -23,7 +23,7 @@ public enum  WqTypeEnum {
 
     public static WqTypeEnum getWqTypeByName(String wqTypeName){
         for(WqTypeEnum configTypeEnum : WqTypeEnum.values()){
-            if(configTypeEnum.wqTypeName == wqTypeName){
+            if(configTypeEnum.wqTypeName.equals(wqTypeName)){
                 return configTypeEnum;
             }
         }

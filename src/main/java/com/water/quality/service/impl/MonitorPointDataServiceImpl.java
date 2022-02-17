@@ -51,12 +51,19 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
 
     @Override
     public int insertMonitorPointData(MonitorPointDataEntity monitorPointDataEntity) {
+        //todo: 详细的参数判空 如果有水质参数为空 则逻辑不考虑该参数
+
         Assert.isNull(monitorPointDataEntity.getId(), ResponseEnum.ADD_ID_NOT);
+
+        /*污染 todo 定时任务：定时查监测点数据 某监测点有三条监测数据未被查看时则按时间从小到大 取连续的三条数据（定时任务比采集数据间隔短基本就不会超过3个）
+        * 对三条数据进行查看 看水质是否为Ⅳ+ 超过2条数据则标记为污染 生成一条污染记录并关联污染id 暂不考虑综合判定污染 后续污染记录被处理了找到监测点数据记录标记已经处理
+        */
 
         //水质类别和对应参数阈值map
         Map<String, Map<String, Pair<Double, Double>>> wqParamMap = wqParamService.getWqParamMap();
 
-        //暂定Ⅲ类水质超标 Ⅳ类水质污染
+        //超标有范围 Ⅳ+类水质污染
+
         doCountWqType(monitorPointDataEntity, wqParamMap);
 
         doCountWqParamTypeOut(monitorPointDataEntity, wqParamMap);
@@ -75,6 +82,8 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
         monitorPointDataEntity.setUpdateTime(LocalDateTime.now());
         monitorPointDataEntity.setCreatorId(UserContext.getUserId());
         monitorPointDataEntity.setEditorId(UserContext.getUserId());
+        monitorPointDataEntity.setHandled(false);
+        monitorPointDataEntity.setChecked(false);
     }
 
     /**
@@ -83,21 +92,15 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
      * @param wqParamMap
      */
     private void doCountWqParamTypeOut(MonitorPointDataEntity monitorPointDataEntity, Map<String, Map<String, Pair<Double, Double>>> wqParamMap) {
-//        monitorPointDataEntity.setPhOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_PH, monitorPointDataEntity.getPh(), wqParamMap));
-//        monitorPointDataEntity.setDissolvedOxygenOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_DISSOLVEDOXYGEN, monitorPointDataEntity.getDissolvedOxygen(), wqParamMap));
-//        monitorPointDataEntity.setNh3nOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_NH3N, monitorPointDataEntity.getNh3n(), wqParamMap));
-//        monitorPointDataEntity.setMno4Out(countWqParamTypeOut(WqParamTypeConstant.TYPE_MNO4, monitorPointDataEntity.getMno4(), wqParamMap));
         Map<String, Pair<Double, Double>> wqParamOutMap = wqParamService.getWqParamOutMap();
         monitorPointDataEntity.setPhOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_PH, monitorPointDataEntity.getPh(), wqParamOutMap));
         monitorPointDataEntity.setDissolvedOxygenOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_DISSOLVEDOXYGEN, monitorPointDataEntity.getDissolvedOxygen(), wqParamOutMap));
         monitorPointDataEntity.setNh3nOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_NH3N, monitorPointDataEntity.getNh3n(), wqParamOutMap));
         monitorPointDataEntity.setMno4Out(countWqParamTypeOut(WqParamTypeConstant.TYPE_MNO4, monitorPointDataEntity.getMno4(), wqParamOutMap));
-        monitorPointDataEntity.setMno4Out(countWqParamTypeOut(WqParamTypeConstant.TYPE_TURBIDITY, monitorPointDataEntity.getMno4(), wqParamOutMap));
-        monitorPointDataEntity.setMno4Out(countWqParamTypeOut(WqParamTypeConstant.TYPE_TEMPERATURE, monitorPointDataEntity.getMno4(), wqParamOutMap));
-        monitorPointDataEntity.setMno4Out(countWqParamTypeOut(WqParamTypeConstant.TYPE_CONDUCTIVITY, monitorPointDataEntity.getMno4(), wqParamOutMap));
-        monitorPointDataEntity.setMno4Out(countWqParamTypeOut(WqParamTypeConstant.TYPE_REDOXPOTENTIAL, monitorPointDataEntity.getMno4(), wqParamOutMap));
-
-
+        monitorPointDataEntity.setTurbidityOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_TURBIDITY, monitorPointDataEntity.getTurbidity(), wqParamOutMap));
+        monitorPointDataEntity.setTemperatureOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_TEMPERATURE, monitorPointDataEntity.getTemperature(), wqParamOutMap));
+        monitorPointDataEntity.setConductivityOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_CONDUCTIVITY, monitorPointDataEntity.getConductivity(), wqParamOutMap));
+        monitorPointDataEntity.setRedoxPotentialOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_REDOXPOTENTIAL, monitorPointDataEntity.getRedoxPotential(), wqParamOutMap));
     }
 
     /**
@@ -108,16 +111,12 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
      * @return 是否超标
      */
     private Boolean countWqParamTypeOut(String key, Double value, Map<String, Pair<Double, Double>> wqParamOutMap) {
-        //Ⅳ+类水质污染
-        //水质三类下界
-//        Double minValue = wqParamMap.get(WqTypeConstant.THIRD).get(key).getKey();
-//        return Double.compare(value, minValue) == 1;
         Pair<Double, Double> doubleDoublePair = wqParamOutMap.get(key);
         return value < doubleDoublePair.getKey() || value > doubleDoublePair.getValue();
     }
 
     /**
-     * 计算水质类型
+     * 计算水质类型 单参数判定水质
      * @return
      * @param monitorPointDataEntity 检测数据实体
      * @param wqParamMap
@@ -141,5 +140,11 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
             }
         }
         monitorPointDataEntity.setWqTypeName(wqType.getWqTypeName());
+
+        if (wqType.equals(WqTypeEnum.FIRST) || wqType.equals(WqTypeEnum.SECOND) || wqType.equals(WqTypeEnum.THIRD) ) {
+            monitorPointDataEntity.setSingleIsPollution(false);
+        } else {
+            monitorPointDataEntity.setSingleIsPollution(true);
+        }
     }
 }
