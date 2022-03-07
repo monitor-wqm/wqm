@@ -41,6 +41,13 @@ public enum ResponseEnum {
     DELETE_ID_NOT(214, "删除ID不能指定"),
     ID_NULL_ERROR(215, "ID不能为空"),
     NAME_REPEAT_ERROR(216, "名称重复"),
+    MONITORPOINT_ID_NULL(217, "监测点id为空"),
+    MONITORPOINT_NODE_NULL(218, "监测点节点为空"),
+    PH_IS_NULL(219, "PH为空"),
+    DISSOLVEDOXYGEN_IS_NULL(220, "溶氧量为空"),
+    NH3N_IS_NULL(221, "氨氮为空"),
+    MNO4_IS_NULL(222, "高猛酸盐为空"),
+    CITY_DISTRICT_NULL(223, "市区为空"),
 
     USER_BIND_IDCARD_EXIST_ERROR(301, "身份证号码已绑定"),
     USER_NO_BIND_ERROR(302, "用户未绑定"),

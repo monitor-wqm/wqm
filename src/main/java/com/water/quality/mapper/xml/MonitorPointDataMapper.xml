@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.water.quality.mapper.MonitorPointDataMapper">
 
+    <select id="selectPollutionWithTimesDesc" resultType="java.util.Map">
+        select id, single_is_pollution
+        from monitor_point_data
+        where monitor_point_id = #{monPointId}
+        order by create_time DESC
+        limit #{count}
+
+    </select>
+
 </mapper>

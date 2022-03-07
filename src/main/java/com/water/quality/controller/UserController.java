@@ -46,7 +46,7 @@ public class  UserController {
                         @RequestParam("password") @ApiParam(value = "密码", required = true) String password) {
         UserVo user = userService.login(username, password);
         Assert.notNull(user, ResponseEnum.LOGINACCT_PASSWORD_EXCEPTION);
-        //todo session设置
+        //todo session设置(暂时不做登录权限等,先有个密码校验)
         return R.ok().data("user", user);
     }
 }

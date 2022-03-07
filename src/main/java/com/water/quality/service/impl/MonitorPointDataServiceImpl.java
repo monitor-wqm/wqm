@@ -51,23 +51,27 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
 
     @Override
     public int insertMonitorPointData(MonitorPointDataEntity monitorPointDataEntity) {
-        //todo: 详细的参数判空 如果有水质参数为空 则逻辑不考虑该参数
-
         Assert.isNull(monitorPointDataEntity.getId(), ResponseEnum.ADD_ID_NOT);
-
-        /*污染 todo 定时任务：定时查监测点数据 某监测点有三条监测数据未被查看时则按时间从小到大 取连续的三条数据（定时任务比采集数据间隔短基本就不会超过3个）
-        * 对三条数据进行查看 看水质是否为Ⅳ+ 超过2条数据则标记为污染 生成一条污染记录并关联污染id 暂不考虑综合判定污染 后续污染记录被处理了找到监测点数据记录标记已经处理
-        */
-
-        //水质类别和对应参数阈值map
-        Map<String, Map<String, Pair<Double, Double>>> wqParamMap = wqParamService.getWqParamMap();
+        Assert.notNull(monitorPointDataEntity.getMonitorPointId(), ResponseEnum.MONITORPOINT_ID_NULL);
+        Assert.notNull(monitorPointDataEntity.getId(), ResponseEnum.MONITORPOINT_NODE_NULL);
+        //经纬度待定 和地点选填必填或生成待确定
+        //暂定 ph 溶氧量 氨氮 高猛酸盐必填
+        Assert.notNull(monitorPointDataEntity.getPh(), ResponseEnum.PH_IS_NULL);
+        Assert.notNull(monitorPointDataEntity.getDissolvedOxygen(), ResponseEnum.DISSOLVEDOXYGEN_IS_NULL);
+        Assert.notNull(monitorPointDataEntity.getNh3n(), ResponseEnum.NH3N_IS_NULL);
+        Assert.notNull(monitorPointDataEntity.getMno4(), ResponseEnum.MNO4_IS_NULL);
+        Assert.notNull(monitorPointDataEntity.getCity(), ResponseEnum.CITY_DISTRICT_NULL);
+        Assert.notNull(monitorPointDataEntity.getDistrict(), ResponseEnum.CITY_DISTRICT_NULL);
 
         //超标有范围 Ⅳ+类水质污染
 
-        doCountWqType(monitorPointDataEntity, wqParamMap);
+        //水质类别名称 和 单参数是否污染
+        doCountWqType(monitorPointDataEntity);
 
-        doCountWqParamTypeOut(monitorPointDataEntity, wqParamMap);
+        //计算水质参数超标信息
+        doCountWqParamTypeOut(monitorPointDataEntity);
 
+        //补充额外信息 创建时间等
         doCountExInfo(monitorPointDataEntity);
 
         return baseMapper.insert(monitorPointDataEntity);
@@ -89,9 +93,8 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
     /**
      * 计算水质参数超标信息
      * @param monitorPointDataEntity 检测数据实体
-     * @param wqParamMap
      */
-    private void doCountWqParamTypeOut(MonitorPointDataEntity monitorPointDataEntity, Map<String, Map<String, Pair<Double, Double>>> wqParamMap) {
+    private void doCountWqParamTypeOut(MonitorPointDataEntity monitorPointDataEntity) {
         Map<String, Pair<Double, Double>> wqParamOutMap = wqParamService.getWqParamOutMap();
         monitorPointDataEntity.setPhOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_PH, monitorPointDataEntity.getPh(), wqParamOutMap));
         monitorPointDataEntity.setDissolvedOxygenOut(countWqParamTypeOut(WqParamTypeConstant.TYPE_DISSOLVEDOXYGEN, monitorPointDataEntity.getDissolvedOxygen(), wqParamOutMap));
@@ -111,6 +114,9 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
      * @return 是否超标
      */
     private Boolean countWqParamTypeOut(String key, Double value, Map<String, Pair<Double, Double>> wqParamOutMap) {
+        if (value == null) {
+            return null;
+        }
         Pair<Double, Double> doubleDoublePair = wqParamOutMap.get(key);
         return value < doubleDoublePair.getKey() || value > doubleDoublePair.getValue();
     }
@@ -119,9 +125,10 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
      * 计算水质类型 单参数判定水质
      * @return
      * @param monitorPointDataEntity 检测数据实体
-     * @param wqParamMap
      */
-    private void doCountWqType(MonitorPointDataEntity monitorPointDataEntity, Map<String, Map<String, Pair<Double, Double>>> wqParamMap) {
+    private void doCountWqType(MonitorPointDataEntity monitorPointDataEntity) {
+        //水质类别和对应参数阈值map
+        Map<String, Map<String, Pair<Double, Double>>> wqParamMap = wqParamService.getWqParamMap();
         Double ph = monitorPointDataEntity.getPh();
         Double dissolvedOxygen = monitorPointDataEntity.getDissolvedOxygen();
         Double nh3n = monitorPointDataEntity.getNh3n();

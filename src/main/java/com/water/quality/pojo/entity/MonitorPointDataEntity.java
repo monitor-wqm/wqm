@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.sun.istack.internal.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,9 +35,11 @@ public class MonitorPointDataEntity implements Serializable {
     @ApiModelProperty(value = "监测点当前的水质类别名称")
     private String wqTypeName;
 
+    @NotNull
     @ApiModelProperty(value = "监测点id")
     private Long monitorPointId;
 
+    @NotNull
     @ApiModelProperty(value = "监测点节点序号")
     private Long montiorPointNodeId;
 
@@ -49,9 +52,11 @@ public class MonitorPointDataEntity implements Serializable {
     @ApiModelProperty(value = "经度")
     private Double lng;
 
+    @NotNull
     @ApiModelProperty(value = "市")
     private String city;
 
+    @NotNull
     @ApiModelProperty(value = "区")
     private String district;
 
@@ -89,6 +94,7 @@ public class MonitorPointDataEntity implements Serializable {
     @TableField("is_pollution")
     private Boolean pollution;
 
+    @NotNull
     @ApiModelProperty(value = "地点")
     private String site;
 
