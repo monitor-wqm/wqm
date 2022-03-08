@@ -18,8 +18,16 @@ public class JudgingPollutionJob {
     @Autowired
     private JobService jobService;
 
-    @Scheduled(cron = "0 0 */3 * * ?")
-    public void runExpired(){
+    @Scheduled(cron = "${pollution.cron}")
+    public void runJudging(){
         jobService.judgingMonitorDataIsPollution();
+    }
+
+    /**
+     * 模拟新增监测点数据
+     */
+    @Scheduled(cron = "${data.cron}")
+    public void addData(){
+        jobService.addMonitorPointData();
     }
 }

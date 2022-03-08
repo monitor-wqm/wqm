@@ -44,4 +44,11 @@ public class PollutionRecordController {
         Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("list", list);
     }
+
+    /**
+     * 污染记录逻辑 todo
+     * 1:系统分析: 定时任务一次分析所有？或者点击系统分析再根据污染id找出未分析的污染记录 分析出污染title 起始时间 污染等级
+     * 2:人工处理: 列出污染记录 选择一条进行人工处理 填上采取措施和措施效果、污染分析字段  完成后 把监测点污染状态置0 污染记录监测点数据标记已处理
+     */
+
 }

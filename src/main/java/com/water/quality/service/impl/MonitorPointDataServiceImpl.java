@@ -53,7 +53,7 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
     public int insertMonitorPointData(MonitorPointDataEntity monitorPointDataEntity) {
         Assert.isNull(monitorPointDataEntity.getId(), ResponseEnum.ADD_ID_NOT);
         Assert.notNull(monitorPointDataEntity.getMonitorPointId(), ResponseEnum.MONITORPOINT_ID_NULL);
-        Assert.notNull(monitorPointDataEntity.getId(), ResponseEnum.MONITORPOINT_NODE_NULL);
+        Assert.notNull(monitorPointDataEntity.getMontiorPointNodeId(), ResponseEnum.MONITORPOINT_NODE_NULL);
         //经纬度待定 和地点选填必填或生成待确定
         //暂定 ph 溶氧量 氨氮 高猛酸盐必填
         Assert.notNull(monitorPointDataEntity.getPh(), ResponseEnum.PH_IS_NULL);
@@ -84,8 +84,10 @@ public class MonitorPointDataServiceImpl extends ServiceImpl<MonitorPointDataMap
     private void doCountExInfo(MonitorPointDataEntity monitorPointDataEntity) {
         monitorPointDataEntity.setCreateTime(LocalDateTime.now());
         monitorPointDataEntity.setUpdateTime(LocalDateTime.now());
-        monitorPointDataEntity.setCreatorId(UserContext.getUserId());
-        monitorPointDataEntity.setEditorId(UserContext.getUserId());
+        if (monitorPointDataEntity.getCreatorId() == null) {
+            monitorPointDataEntity.setCreatorId(UserContext.getUserId());
+            monitorPointDataEntity.setEditorId(UserContext.getUserId());
+        }
         monitorPointDataEntity.setHandled(false);
         monitorPointDataEntity.setChecked(false);
     }

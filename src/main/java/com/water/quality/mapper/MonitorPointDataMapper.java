@@ -1,12 +1,12 @@
 package com.water.quality.mapper;
 
-import com.water.quality.pojo.entity.MonitorPointDataEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.MapKey;
+import com.water.quality.pojo.dto.MonPointDataPollutionDto;
+import com.water.quality.pojo.entity.MonitorPointDataEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * <p>
@@ -25,7 +25,6 @@ public interface MonitorPointDataMapper extends BaseMapper<MonitorPointDataEntit
      * @param count 多少条记录
      * @return k:id, v:pollution
      */
-    @MapKey("id")
-    Map<Long, Boolean> selectPollutionWithTimesDesc(@Param("monPointId") Long monPointId ,
-                                                    @Param("count") int count);
+    List<MonPointDataPollutionDto> selectPollutionWithTimesDesc(@Param("monPointId") Long monPointId ,
+                                                                @Param("count") int count);
 }

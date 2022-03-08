@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
  * @since 2022-02-10
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="MonitorPointData对象", description="监测点数据表")
 @TableName("monitor_point_data")
