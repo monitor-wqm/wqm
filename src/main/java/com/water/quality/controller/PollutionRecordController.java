@@ -2,6 +2,7 @@ package com.water.quality.controller;
 
 
 import com.water.quality.asserts.Assert;
+import com.water.quality.pojo.entity.MonitorPointEntity;
 import com.water.quality.pojo.entity.PollutionRecordEntity;
 import com.water.quality.r.R;
 import com.water.quality.r.enums.ResponseEnum;
@@ -43,6 +44,46 @@ public class PollutionRecordController {
         List<PollutionRecordEntity> list = pollutionRecordService.selectPollutionRecordByMonitorPointId(id);
         Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
         return R.ok().data("list", list);
+    }
+
+    @ApiOperation("查询所有监测点的污染记录")
+    @GetMapping("/list")
+    public R list() {
+        List<PollutionRecordEntity> list = pollutionRecordService.list();
+        Assert.isTrue(list.size() > 0, ResponseEnum.DATABASE_NULL_ERROR);
+        return R.ok().data("list", list);
+    }
+
+    /**
+     * 监测点污染记录添加
+     */
+    @PostMapping("/add")
+    public R save(@RequestBody PollutionRecordEntity PollutionRecord){
+        //返回结果用 R 对象封装
+        boolean save = pollutionRecordService.save(PollutionRecord);
+        //使用assert断言判断查询结果
+        Assert.isTrue(save, ResponseEnum.UPDATE_DATA_ERROR);
+        return R.ok();
+    }
+
+    /**
+     * 监测点污染记录删除
+     */
+    @DeleteMapping("/delete/{id}")
+    public R delete(@PathVariable Integer id){
+        boolean delete = pollutionRecordService.removeById(id);
+        Assert.isTrue(delete , ResponseEnum.DELETE_DATA_ERROR);
+        return R.ok();
+    }
+
+    /**
+     * 监测点污染记录id查询
+     */
+    @GetMapping("/search/{id}")
+    public R getById(@PathVariable Integer id){
+        PollutionRecordEntity getById = pollutionRecordService.getById(id);
+        Assert.notNull(getById, ResponseEnum.DATABASE_NULL_ERROR);
+        return R.ok().data("pollutionRecordId", getById);
     }
 
     /**
