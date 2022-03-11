@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 
@@ -126,6 +127,8 @@ public class JobService {
         //新增监测点数据 Ⅲ类 不是单参数污染数据
         List<MonitorPointEntity> list = monitorPointService.list();
         list.forEach(moitorPoint -> {
+            Random random = new Random();
+            int i = random.nextInt(10) - 5;
             MonitorPointDataEntity monitorPointData = new MonitorPointDataEntity();
             monitorPointData.setMonitorPointId(moitorPoint.getId());
             monitorPointData.setMontiorPointNodeId(moitorPoint.getNodeId());
@@ -133,15 +136,15 @@ public class JobService {
             monitorPointData.setLng(30.293628D);
             monitorPointData.setCity("杭州");
             monitorPointData.setDistrict("余杭");
-            monitorPointData.setDepth(20.0);
-            monitorPointData.setTurbidity(17.0);
-            monitorPointData.setTemperature(25.0);
-            monitorPointData.setPh(7.2);
-            monitorPointData.setDissolvedOxygen(5.2);
-            monitorPointData.setConductivity(11.5);
-            monitorPointData.setRedoxPotential(61.5);
-            monitorPointData.setNh3n(0.3);
-            monitorPointData.setMno4(5.0);
+            monitorPointData.setDepth(20.0 + 2*i);
+            monitorPointData.setTurbidity(17.0  + i);
+            monitorPointData.setTemperature(25.0 + i);
+            monitorPointData.setPh(7.2 + i * 0.3);
+            monitorPointData.setDissolvedOxygen(5.2 + i * 0.2);
+            monitorPointData.setConductivity(11.5 + i * 0.5);
+            monitorPointData.setRedoxPotential(61.5 + 3 * i);
+            monitorPointData.setNh3n(0.3  + i * 0.03);
+            monitorPointData.setMno4(5.0 + i * 0.2);
             monitorPointData.setSite("模拟场地");
             monitorPointData.setCreatorId(1l);
             monitorPointData.setEditorId(1l);

@@ -55,7 +55,7 @@ public class WqParamTypeConstant {
     /**
      * 高锰酸钾指数
      */
-    public static final String TYPE_MNO4 = "高锰酸钾指数";
+    public static final String TYPE_MNO4 = "高锰酸盐指数";
 
     /**
      * 高锰酸钾指数

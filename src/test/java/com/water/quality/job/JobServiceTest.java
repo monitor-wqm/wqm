@@ -38,4 +38,11 @@ class JobServiceTest {
     void judgingMonitorDataIsPollution() {
         jobService.judgingMonitorDataIsPollution();
     }
+
+    @Test
+    void addMonitorPointData() {
+        for (int i = 0; i < 100; i++) {
+            jobService.addMonitorPointData();
+        }
+    }
 }

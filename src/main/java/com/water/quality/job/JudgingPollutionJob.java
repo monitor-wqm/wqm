@@ -2,6 +2,7 @@ package com.water.quality.job;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +19,14 @@ public class JudgingPollutionJob {
     @Autowired
     private JobService jobService;
 
+    @Value("${job.enable}")
+    private boolean openJob;
+
     @Scheduled(cron = "${pollution.cron}")
     public void runJudging(){
-        jobService.judgingMonitorDataIsPollution();
+        if (openJob) {
+            jobService.judgingMonitorDataIsPollution();
+        }
     }
 
     /**
@@ -28,6 +34,8 @@ public class JudgingPollutionJob {
      */
     @Scheduled(cron = "${data.cron}")
     public void addData(){
-        jobService.addMonitorPointData();
+        if (openJob) {
+            jobService.addMonitorPointData();
+        }
     }
 }
