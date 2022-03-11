@@ -33,4 +33,6 @@ public interface WqParamService extends IService<WqParamEntity> {
      * 封装水质超标阈值
      */
     Map<String, Pair<Double, Double>> getWqParamOutMap();
+
+    int updateWqParamById(WqParamEntity wqParam);
 }

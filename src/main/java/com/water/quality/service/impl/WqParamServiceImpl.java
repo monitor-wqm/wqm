@@ -1,14 +1,22 @@
 package com.water.quality.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.water.quality.asserts.Assert;
+import com.water.quality.context.UserContext;
 import com.water.quality.mapper.WqParamMapper;
+import com.water.quality.pojo.entity.MonitorPointEntity;
 import com.water.quality.pojo.entity.WqParamEntity;
+import com.water.quality.pojo.entity.WqParamTypeEntity;
 import com.water.quality.pojo.vo.WqParamVo;
+import com.water.quality.r.enums.ResponseEnum;
 import com.water.quality.service.WqParamService;
 import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,6 +36,20 @@ public class WqParamServiceImpl extends ServiceImpl<WqParamMapper, WqParamEntity
     @Override
     public List<WqParamVo> listWithName() {
         return baseMapper.listWithName();
+    }
+    @Override
+    public int updateWqParamById(WqParamEntity wqParam) {
+        //id不能为空
+        Assert.notNull(wqParam.getId(), ResponseEnum.ID_NULL_ERROR);
+
+        WqParamEntity wqParamEntity = baseMapper.selectOne(new LambdaQueryWrapper<WqParamEntity>()
+                .eq(WqParamEntity::getId, wqParam.getId()));
+        //数据库必须存在当前id
+        Assert.notNull(wqParamEntity, ResponseEnum.DATABASE_NULL_ERROR);
+        return baseMapper.update(wqParam, new LambdaUpdateWrapper<WqParamEntity>()
+                .eq(WqParamEntity::getId, wqParam.getId())
+                .set(WqParamEntity::getUpdateTime, new Date())
+                .set(WqParamEntity::getEditorId, UserContext.getUserId()));
     }
 
     @Override

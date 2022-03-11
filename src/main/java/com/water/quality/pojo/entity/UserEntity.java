@@ -43,5 +43,4 @@ public class UserEntity implements Serializable {
     @ApiModelProperty(value = "权限：资源ID列表，多个逗号分割")
     private String permission;
 
-
 }
