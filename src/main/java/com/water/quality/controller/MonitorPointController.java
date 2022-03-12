@@ -60,9 +60,9 @@ public class MonitorPointController {
     @PostMapping("/add")
     public R save(@RequestBody MonitorPointEntity monitorPoint){
         //返回结果用 R 对象封装
-        boolean save = monitorPointService.save(monitorPoint);
+        int save = monitorPointService.saveMonitorPointById(monitorPoint);
         //使用assert断言判断查询结果
-        Assert.isTrue(save, ResponseEnum.UPDATE_DATA_ERROR);
+        Assert.isTrue(save>0, ResponseEnum.UPDATE_DATA_ERROR);
         return R.ok();
     }
 

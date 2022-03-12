@@ -19,4 +19,6 @@ public interface MonitorPointService extends IService<MonitorPointEntity> {
      * @return 受影响行数
      */
     int updateMonitorPointById(MonitorPointEntity monitorPoint);
+
+    int saveMonitorPointById(MonitorPointEntity monitorPoint);
 }

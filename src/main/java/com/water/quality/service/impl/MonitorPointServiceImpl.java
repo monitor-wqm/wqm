@@ -47,4 +47,19 @@ public class MonitorPointServiceImpl extends ServiceImpl<MonitorPointMapper, Mon
                 .set(MonitorPointEntity::getUpdateTime, new Date())
                 .set(MonitorPointEntity::getEditorId, UserContext.getUserId()));
     }
+    @Override
+    public int saveMonitorPointById(MonitorPointEntity monitorPoint) {
+        //新增监测点时 id不能为空
+        Assert.notNull(monitorPoint.getId(), ResponseEnum.ID_NULL_ERROR);
+
+        MonitorPointEntity monitorPointEntity = baseMapper.selectOne(new LambdaQueryWrapper<MonitorPointEntity>()
+                .eq(MonitorPointEntity::getId, monitorPoint.getId()));
+
+        //新增监测点时 id不能重复
+            Assert.isTrue(monitorPointEntity.getId().equals(monitorPoint.getId()), ResponseEnum.ID_REPEAT_ERROR);
+
+        //新增监测点时 name不能重复
+            Assert.isTrue(monitorPointEntity.getName().equals(monitorPoint.getName()), ResponseEnum.NAME_REPEAT_ERROR);
+        return baseMapper.insert(monitorPoint);
+    }
 }

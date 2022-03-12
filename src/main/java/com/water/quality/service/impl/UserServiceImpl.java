@@ -67,4 +67,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return baseMapper.update(user, new LambdaUpdateWrapper<UserEntity>()
                 .eq(UserEntity::getId, user.getId()));
     }
+
+
+
+
+
 }

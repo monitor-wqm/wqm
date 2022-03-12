@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
@@ -30,6 +31,7 @@ public class UserEntity implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @NotNull
     @ApiModelProperty(value = "账号")
     private String username;
 
